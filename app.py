@@ -30,7 +30,7 @@ if 'api_key' in locals():
     st.header("페이지 1: 상세 시나리오 생성기")
 
     # Scenario Introduction
-    st.markdown("**시나리오 소개**: 이 시나리오는 의료진에게 라베프라졸 (Rabeprazole)을 설명하는 내용을 포함합니다. 의료진의 전문 분야는 소화기 내과이며, 병원이나 클리닉에서 근무합니다.")
+    st.markdown("**시나리오 소개**: 이 시나리오는 의료진에게 라비에트 (Rabeprazole)를 설명하는 내용을 포함합니다.")
 
     # Scenario Challenge
     st.markdown("**시나리오 챌린지**: 다음 주제들 중 하나를 선택하여 설명을 시작하세요.")
@@ -47,7 +47,7 @@ if 'api_key' in locals():
         sub_topics = [
             "5년 임상 데이터",
             "소아 임상 데이터",
-            "약물 상호작용에서 비효소적으로 대사됨: 다른 PPI는 cyp2c19로 대사되고 p-cap 계열은 cyp3a4로 대사됩니다. PPI 라비에트의 장점은 다약제를 복용하는 노인 환자에서도 상대적으로 안전하게 사용할 수 있다는 것입니다."
+            "약물 상호작용에서 비효소적으로 대사됨"
         ]
     elif selected_topic == "복약 순응도":
         sub_topics = [
