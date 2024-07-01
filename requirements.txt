@@ -1,4 +1,0 @@
-streamlit==1.36.0
-openai==0.28.0
-toml==0.10.2
-python-dotenv==0.19.2
