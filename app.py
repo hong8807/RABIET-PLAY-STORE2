@@ -1,15 +1,14 @@
-import json
 import os
 import streamlit as st
 import openai
 
 # Load API key from environment variable
-api_key = os.getenv("OPENAI_API_KEY")
+api_key = st.secrets["OPENAI_API_KEY"]
 if api_key is None:
     st.error("API key not found. Please set the OPENAI_API_KEY environment variable.")
 else:
     openai.api_key = api_key
-    st.write("API key loaded successfully.")
+    st.write("API 키가 성공적으로 로드되었습니다.")
 
     st.title("라비에트 영업사원 교육")
 
@@ -34,7 +33,7 @@ else:
         sub_topics = [
             "5년 임상 데이터",
             "소아 임상 데이터",
-            "약물 상호작용에서 비효소적으로 대사됨"
+            "약물 상호작용에서 비효소적으로 대사됨: 다른 PPI는 cyp2c19로 대사되고 p-cap 계열은 cyp3a4로 대사됩니다. PPI 라비에트의 장점은 다약제를 복용하는 노인 환자에서도 상대적으로 안전하게 사용할 수 있다는 것입니다."
         ]
     elif selected_topic == "복약 순응도":
         sub_topics = [
