@@ -2,27 +2,18 @@ import json
 import os
 import streamlit as st
 import openai
-import toml
+from dotenv import load_dotenv
 
-# Load API key from config file without displaying it
-config_file_path = "config.toml"
-st.write("구성 로드 시도 중...")
-if not os.path.exists(config_file_path):
-    st.error(f"구성 파일 {config_file_path}을(를) 찾을 수 없습니다.")
+# Load environment variables from .env file
+load_dotenv()
+
+# Load API key from environment variable
+api_key = os.getenv("OPENAI_API_KEY")
+if api_key is None:
+    st.error("API key not found. Please set the OPENAI_API_KEY environment variable.")
 else:
-    try:
-        with open(config_file_path, 'r') as file:
-            config = toml.load(file)
-        if "openai" not in config or "api_key" not in config["openai"]:
-            st.error("'openai' 섹션 또는 'api_key'가 없는 잘못된 구성 파일입니다.")
-        else:
-            api_key = config["openai"]["api_key"]
-            st.write("API 키가 성공적으로 로드되었습니다.")
-    except Exception as e:
-        st.error(f"구성 파일 로드 중 오류 발생: {e}")
-
-if 'api_key' in locals():
     openai.api_key = api_key
+    st.write("API 키가 성공적으로 로드되었습니다.")
 
     st.title("라비에트 영업사원 교육")
 
@@ -30,7 +21,7 @@ if 'api_key' in locals():
     st.header("페이지 1: 상세 시나리오 생성기")
 
     # Scenario Introduction
-    st.markdown("**시나리오 소개**: 이 시나리오는 의료진에게 라비에트 (Rabeprazole)를 설명하는 내용을 포함합니다.")
+    st.markdown("**시나리오 소개**: 이 시나리오는 의료진에게 라베프라졸 (Rabeprazole)을 설명하는 내용을 포함합니다. 의료진의 전문 분야는 소화기 내과이며, 병원이나 클리닉에서 근무합니다.")
 
     # Scenario Challenge
     st.markdown("**시나리오 챌린지**: 다음 주제들 중 하나를 선택하여 설명을 시작하세요.")
@@ -47,7 +38,7 @@ if 'api_key' in locals():
         sub_topics = [
             "5년 임상 데이터",
             "소아 임상 데이터",
-            "약물 상호작용에서 비효소적으로 대사됨"
+            "약물 상호작용에서 비효소적으로 대사됨: 다른 PPI는 cyp2c19로 대사되고 p-cap 계열은 cyp3a4로 대사됩니다. PPI 라비에트의 장점은 다약제를 복용하는 노인 환자에서도 상대적으로 안전하게 사용할 수 있다는 것입니다."
         ]
     elif selected_topic == "복약 순응도":
         sub_topics = [
@@ -72,7 +63,7 @@ if 'api_key' in locals():
 
         try:
             response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4",
                 messages=[
                     {"role": "system", "content": "You are a helpful assistant."},
                     {"role": "user", "content": prompt}
@@ -91,6 +82,3 @@ if 'api_key' in locals():
 
     if st.button("다른 주제로 이동"):
         st.experimental_rerun()
-
-else:
-    st.error("API 키가 로드되지 않았습니다. 구성 파일을 확인하세요.")
